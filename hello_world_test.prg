@@ -63,3 +63,6 @@ erase TESTS_STRUCTURE.dbf
 * Code under test (CUT)
 #include "hello_world.prg"
 
+* Unit Test Framework
+#include "PRGUNIT.prg"
+
