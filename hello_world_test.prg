@@ -7,20 +7,7 @@
 memvar NAME, CMPOP, EXPVALUE, RETVALUE, CMDSTR, TESTEXPR
 
 * Create tests database structure
-create TESTS_STRUCTURE
-append blank
-replace Field_name with "NAME", Field_type with "C",;
-        Field_Len  with 80,     Field_dec  with 0
-append blank
-replace Field_name with "CMPOP", Field_type with "C",;
-        Field_Len  with 2,       Field_dec  with 0
-append blank
-replace Field_name with "EXPVALUE", Field_type with "C",;
-        Field_Len  with 80,         Field_dec  with 0
-append blank
-replace Field_name with "CMDSTR", Field_type with "C",;
-        Field_Len  with 80,       Field_dec  with 0
-close TESTS_STRUCTURE
+do MakeTestDatabaseStructure with "TESTS_STRUCTURE"
 
 * Create actual tests database, and load test data into it
 create TESTS from TESTS_STRUCTURE
