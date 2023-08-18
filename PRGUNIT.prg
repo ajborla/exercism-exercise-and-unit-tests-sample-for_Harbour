@@ -37,3 +37,14 @@ procedure MakeTestDatabase(dbfName)
    erase &dbfStructure
 return
 
+procedure AddTestDatabase(dbfName, testName, cmpOp, expValue, cmdStr)
+   * Load a test data record into tests database
+   use &dbfName
+   append blank
+   replace &dbfName->NAME with testName
+   replace &dbfName->CMPOP with cmpOp
+   replace &dbfName->EXPVALUE with expValue
+   replace &dbfName->CMDSTR with cmdStr
+   close &dbfName
+return
+

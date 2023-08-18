@@ -7,19 +7,13 @@
 memvar NAME, CMPOP, EXPVALUE, RETVALUE, CMDSTR, TESTEXPR
 
 memvar TESTS
-TESTS := "TESTX"
+TESTS := "TESTS"
 
 * Create tests database
 do MakeTestDatabase with TESTS
 
-* Load test data into tests database
-use &TESTS
-append blank
-replace NAME with "Say Hi!"
-replace CMPOP with "=="
-replace EXPVALUE with "Hello, World!"
-replace CMDSTR with "HelloWorld()"
-close &TESTS
+* Add test data into tests database
+do AddTestDatabase with TESTS, "say Hi!", "==", "Hello, World!", "HelloWorld()"
 
 * Execute unit tests
 use &TESTS
