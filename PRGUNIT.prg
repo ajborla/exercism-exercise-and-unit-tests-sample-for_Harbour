@@ -25,3 +25,15 @@ procedure MakeTestDatabaseStructure(dbfName)
    close &dbfName
 return
 
+procedure MakeTestDatabase(dbfName)
+   local dbfStructure := dbfName + "_STRUCTURE"
+
+   * Build test database from database structure file
+   do MakeTestDatabaseStructure with dbfStructure
+   create &dbfName from &dbfStructure
+
+   * Ensure database structure file is removed
+   dbfStructure := dbfStructure + ".dbf"
+   erase &dbfStructure
+return
+

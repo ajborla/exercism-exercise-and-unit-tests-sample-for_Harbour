@@ -6,26 +6,29 @@
 * Variable declarations
 memvar NAME, CMPOP, EXPVALUE, RETVALUE, CMDSTR, TESTEXPR
 
-* Create tests database structure
-do MakeTestDatabaseStructure with "TESTS_STRUCTURE"
+memvar TESTS
+TESTS := "TESTX"
 
-* Create actual tests database, and load test data into it
-create TESTS from TESTS_STRUCTURE
+* Create tests database
+do MakeTestDatabase with TESTS
+
+* Load test data into tests database
+use &TESTS
 append blank
 replace NAME with "Say Hi!"
 replace CMPOP with "=="
 replace EXPVALUE with "Hello, World!"
 replace CMDSTR with "HelloWorld()"
-close TESTS
+close &TESTS
 
 * Execute unit tests
-use TESTS
+use &TESTS
 do while !EOF()
    * Extract test data
-   NAME := TRIM(TESTS->NAME)
-   CMPOP := TESTS->CMPOP
-   EXPVALUE := TRIM(TESTS->EXPVALUE)
-   CMDSTR := TRIM(TESTS->CMDSTR)
+   NAME := TRIM(&TESTS->NAME)
+   CMPOP := &TESTS->CMPOP
+   EXPVALUE := TRIM(&TESTS->EXPVALUE)
+   CMDSTR := TRIM(&TESTS->CMDSTR)
 
    * Execute test, and build test rexpression
    RETVALUE := &CMDSTR
@@ -41,11 +44,11 @@ do while !EOF()
    * ... next test
    skip
 enddo
-close TESTS
+close &TESTS
 
 * Cleanup databases
-erase TESTS.dbf
-erase TESTS_STRUCTURE.dbf
+TESTS := TESTS + ".dbf"
+erase &TESTS
 
 * Code under test (CUT)
 #include "hello_world.prg"
