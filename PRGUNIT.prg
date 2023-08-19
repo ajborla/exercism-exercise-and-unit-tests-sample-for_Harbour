@@ -62,8 +62,8 @@ function RunTests(dbfName, keepTestDBF, outputJSON)
       expValue := TRIM(&dbfName->EXPVALUE)
       cmdStr := TRIM(&dbfName->CMDSTR)
 
-      * Execute test, and build test rexpression
-      retValue := &cmdStr
+      * Execute test, and build test expression
+      retValue := TypeToS(&cmdStr)
       testExpr := '"' + retValue + '" ' + cmpOp + ' "' + expValue + '"'
 
       * If the parameter flag, outputJSON, is omitted, or set to .F., then
@@ -97,4 +97,28 @@ function RunTests(dbfName, keepTestDBF, outputJSON)
    endif
 
 return success
+
+function TypeToS(value)
+   * Use VALTYPE() instead of TYPE() to check type
+   local typeValue := VALTYPE(value)
+
+   switch typeValue
+      * Character type returned untouched
+      case "C"
+         return value
+
+      * Date as "yyyymmdd"
+      case "D"
+         return DTOS(value)
+
+      * Logical as literal string representation of self
+      case "L"
+         return IIF(value, ".T.", ".F.")
+
+      case "N"
+         return STR(value)
+   endswitch
+
+* Ignore the remaining types, just return NIL
+return NIL
 
