@@ -48,7 +48,7 @@ procedure AddTestDatabase(dbfName, testName, cmpOp, expValue, cmdStr)
    close &dbfName
 return
 
-function RunTests(dbfName)
+function RunTests(dbfName, keepTestDBF, outputJSON)
    local testName, cmpOp, expValue, cmdStr, retValue, testExpr
    local success := .T.
 
@@ -66,13 +66,21 @@ function RunTests(dbfName)
       retValue := &cmdStr
       testExpr := '"' + retValue + '" ' + cmpOp + ' "' + expValue + '"'
 
-      * Report test outcome
-      if &testExpr
-         ?? "OK - " + testName
+      * If the parameter flag, outputJSON, is omitted, or set to .F., then
+      *  emit test report in TAP format
+
+      if outputJSON == NIL .OR. !outputJSON
+         * Report test outcome - TAP
+         if &testExpr
+            ?? "OK - " + testName
+         else
+            * Single test failure signals failure of whole suite
+            success := .F.
+            ?? "FAIL - " + testName
+         endif
       else
-         * Single test failure signals failure of whole suite
-         success := .F.
-         ?? "FAIL - " + testName
+         * Report test outcome - JSON
+         ? "JSON"
       endif
 
       * ... next test
@@ -81,8 +89,12 @@ function RunTests(dbfName)
 
    close &dbfName
 
-   dbfName := dbfName + ".dbf"
-   erase &dbfName
+   * If the parameter flag, keepTestDBF, is omitted, or set to .F., then
+   *  remove the tests database
+   if keepTestDBF == NIL .OR. !keepTestDBF
+      dbfName := dbfName + ".dbf"
+      erase &dbfName
+   endif
 
 return success
 
