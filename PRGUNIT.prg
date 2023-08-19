@@ -48,3 +48,41 @@ procedure AddTestDatabase(dbfName, testName, cmpOp, expValue, cmdStr)
    close &dbfName
 return
 
+function RunTests(dbfName)
+   local testName, cmpOp, expValue, cmdStr, retValue, testExpr
+   local success := .T.
+
+   use &dbfName
+
+   * Execute unit tests
+   do while !EOF()
+      * Extract test data
+      testName := TRIM(&dbfName->NAME)
+      cmpOp := &dbfName->CMPOP
+      expValue := TRIM(&dbfName->EXPVALUE)
+      cmdStr := TRIM(&dbfName->CMDSTR)
+
+      * Execute test, and build test rexpression
+      retValue := &cmdStr
+      testExpr := '"' + retValue + '" ' + cmpOp + ' "' + expValue + '"'
+
+      * Report test outcome
+      if &testExpr
+         ?? "OK - " + testName
+      else
+         * Single test failure signals failure of whole suite
+         success := .F.
+         ?? "FAIL - " + testName
+      endif
+
+      * ... next test
+      skip
+   enddo
+
+   close &dbfName
+
+   dbfName := dbfName + ".dbf"
+   erase &dbfName
+
+return success
+

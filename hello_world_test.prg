@@ -4,9 +4,9 @@
 * ----------------------------------------------------------------------------
 
 * Variable declarations
-memvar NAME, CMPOP, EXPVALUE, RETVALUE, CMDSTR, TESTEXPR
+memvar TESTS, SUCCESS
 
-memvar TESTS
+* Test database name
 TESTS := "TESTS"
 
 * Create tests database
@@ -16,33 +16,10 @@ do MakeTestDatabase with TESTS
 do AddTestDatabase with TESTS, "say Hi!", "==", "Hello, World!", "HelloWorld()"
 
 * Execute unit tests
-use &TESTS
-do while !EOF()
-   * Extract test data
-   NAME := TRIM(&TESTS->NAME)
-   CMPOP := &TESTS->CMPOP
-   EXPVALUE := TRIM(&TESTS->EXPVALUE)
-   CMDSTR := TRIM(&TESTS->CMDSTR)
+SUCCESS := RunTests(TESTS)
 
-   * Execute test, and build test rexpression
-   RETVALUE := &CMDSTR
-   TESTEXPR := '"' + RETVALUE + '" ' + CMPOP + ' "' + EXPVALUE + '"'
-
-   * Report test outcome
-   if &TESTEXPR
-      ?? "OK - " + NAME
-   else
-      ?? "FAIL - " + NAME
-   endif
-
-   * ... next test
-   skip
-enddo
-close &TESTS
-
-* Cleanup databases
-TESTS := TESTS + ".dbf"
-erase &TESTS
+* Return success status to OS
+ERRORLEVEL(IIF(SUCCESS, 0, 1))
 
 * Code under test (CUT)
 #include "hello_world.prg"
