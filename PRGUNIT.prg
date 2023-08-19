@@ -72,11 +72,11 @@ function RunTests(dbfName, keepTestDBF, outputJSON)
       if outputJSON == NIL .OR. !outputJSON
          * Report test outcome - TAP
          if &testExpr
-            ?? "OK - " + testName
+            ? "OK - " + testName
          else
             * Single test failure signals failure of whole suite
             success := .F.
-            ?? "FAIL - " + testName
+            ? "FAIL - " + testName
          endif
       else
          * Report test outcome - JSON
