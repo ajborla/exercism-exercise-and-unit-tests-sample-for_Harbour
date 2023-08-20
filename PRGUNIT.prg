@@ -57,13 +57,13 @@ function RunTests(dbfName, keepTestDBF, outputJSON)
    * Execute unit tests
    do while !EOF()
       * Extract test data
-      testName := TRIM(&dbfName->NAME)
+      testName := ALLTRIM(&dbfName->NAME)
       cmpOp := &dbfName->CMPOP
-      expValue := TRIM(&dbfName->EXPVALUE)
-      cmdStr := TRIM(&dbfName->CMDSTR)
+      expValue := ALLTRIM(&dbfName->EXPVALUE)
+      cmdStr := ALLTRIM(&dbfName->CMDSTR)
 
       * Execute test, and build test expression
-      retValue := TypeToS(&cmdStr)
+      retValue := ALLTRIM(TypeToS(&cmdStr))
       testExpr := '"' + retValue + '" ' + cmpOp + ' "' + expValue + '"'
 
       * If the parameter flag, outputJSON, is omitted, or set to .F., then
