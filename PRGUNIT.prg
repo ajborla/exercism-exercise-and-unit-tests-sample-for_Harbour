@@ -63,7 +63,7 @@ function RunTests(dbfName, keepTestDBF, outputJSON)
       cmdStr := ALLTRIM(&dbfName->CMDSTR)
 
       * Execute test, and build test expression
-      retValue := ALLTRIM(TypeToS(&cmdStr))
+      retValue := TypeToS(&cmdStr)
       testExpr := '"' + retValue + '" ' + cmpOp + ' "' + expValue + '"'
 
       * If the parameter flag, outputJSON, is omitted, or set to .F., then
@@ -115,10 +115,16 @@ function TypeToS(value)
       case "L"
          return IIF(value, ".T.", ".F.")
 
+      * String-converted numerics are right-justified, so ensure are
+      *  returned trimmed
       case "N"
-         return STR(value)
+         return ALLTRIM(STR(value))
+
+      * Support use of NIL return type (usually to indicate error)
+      case "U"
+         return "NIL"
    endswitch
 
-* Ignore the remaining types, just return NIL
+* Ignore the remaining types, just return NIL (likely runtime error)
 return NIL
 
