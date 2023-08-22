@@ -104,25 +104,20 @@ function TypeToS(value)
 
    switch typeValue
       * Character type returned untouched
-      case "C"
-         return value
+      case "C" ; return value
 
       * Date as "yyyymmdd"
-      case "D"
-         return DTOS(value)
+      case "D" ; return DTOS(value)
 
       * Logical as literal string representation of self
-      case "L"
-         return IIF(value, ".T.", ".F.")
+      case "L" ; return IIF(value, ".T.", ".F.")
 
       * String-converted numerics are right-justified, so ensure are
       *  returned trimmed
-      case "N"
-         return ALLTRIM(STR(value))
+      case "N" ; return ALLTRIM(STR(value))
 
       * Support use of NIL return type (usually to indicate error)
-      case "U"
-         return "NIL"
+      case "U" ; return "NIL"
    endswitch
 
 * Ignore the remaining types, just return NIL (likely runtime error)
