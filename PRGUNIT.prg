@@ -38,12 +38,13 @@ procedure MakeTestDatabase(dbfName)
 return
 
 procedure AddTestDatabase(dbfName, testName, cmpOp, expValue, cmdStr)
-   * Load a test data record into tests database
+   * Load a test data record into tests database (note use of 'Wrap' to
+   *  preserve spaces in expected value string)
    use &dbfName
    append blank
    replace &dbfName->NAME with testName
    replace &dbfName->CMPOP with cmpOp
-   replace &dbfName->EXPVALUE with expValue
+   replace &dbfName->EXPVALUE with Wrap(expValue)
    replace &dbfName->CMDSTR with cmdStr
    close &dbfName
 return
@@ -56,10 +57,11 @@ function RunTests(dbfName, keepTestDBF, outputJSON)
 
    * Execute unit tests
    do while !EOF()
-      * Extract test data
+      * Extract test data (note use of 'Unwrap' to extract space-preserved
+      *  expected value string)
       testName := ALLTRIM(&dbfName->NAME)
       cmpOp := &dbfName->CMPOP
-      expValue := ALLTRIM(&dbfName->EXPVALUE)
+      expValue := Unwrap(ALLTRIM(&dbfName->EXPVALUE))
       cmdStr := ALLTRIM(&dbfName->CMDSTR)
 
       * Execute test, and build test expression
@@ -122,4 +124,18 @@ function TypeToS(value)
 
 * Ignore the remaining types, just return NIL (likely runtime error)
 return NIL
+
+* Utilities to preserve leading and trailing spaces in strings as they
+*  are stored into, and extracted from, database fields
+function Wrap(string) ; return WrapString(string, .F., "[", "]")
+function Unwrap(string) ; return WrapString(string, .T.)
+
+function WrapString(string, doUnwrap, wrapStart, wrapEnd)
+   local uws
+   if doUnwrap
+      uws := SUBSTR(SUBSTR(string, 2), 1, LEN(string) - 2)
+   else
+      uws := wrapStart + string + wrapEnd
+   endif
+return uws
 
