@@ -1,0 +1,49 @@
+* ----------------------------------------------------------------------------
+* Harbour Unit Test Runner [triangle.prg]
+* Anthony J. Borla (ajborla@bigpond.com)
+* ----------------------------------------------------------------------------
+
+* Variable declarations
+memvar TESTS, SUCCESS
+
+* Test database name
+TESTS := "TESTS"
+
+* Create tests database
+do MakeTestDatabase with TESTS
+
+* Add test data into tests database
+do AddTestDatabase with TESTS, "All sides are equal, equilateral", "==", ".T.", "IsEquilateral(2, 2, 2)"
+do AddTestDatabase with TESTS, "Any side is unequal", "==", ".F.", "IsEquilateral(2, 3, 2)"
+do AddTestDatabase with TESTS, "No sides are equal, equilateral", "==", ".F.", "IsEquilateral(5, 4, 6)"
+do AddTestDatabase with TESTS, "All zero sides is not a triangle", "==", ".F.", "IsEquilateral(0, 0, 0)"
+do AddTestDatabase with TESTS, "Sides may be floats, equilateral", "==", ".T.", "IsEquilateral(0.5, 0.5, 0.5)"
+do AddTestDatabase with TESTS, "Last two sides are equal", "==", ".T.", "IsIsosceles(3, 4, 4)"
+do AddTestDatabase with TESTS, "First two sides are equal", "==", ".T.", "IsIsosceles(4, 4, 3)"
+do AddTestDatabase with TESTS, "First and last sides are equal", "==", ".T.", "IsIsosceles(4, 3, 4)"
+do AddTestDatabase with TESTS, "Equilateral triangles are also isosceles", "==", ".T.", "IsIsosceles(4, 4, 4)"
+do AddTestDatabase with TESTS, "No sides are equal, isosceles", "==", ".F.", "IsIsosceles(2, 3, 4)"
+do AddTestDatabase with TESTS, "First triangle inequality violation", "==", ".F.", "IsIsosceles(1, 1, 3)"
+do AddTestDatabase with TESTS, "Second triangle inequality violation", "==", ".F.", "IsIsosceles(1, 3, 1)"
+do AddTestDatabase with TESTS, "Third triangle inequality violation", "==", ".F.", "IsIsosceles(3, 1, 1)"
+do AddTestDatabase with TESTS, "Sides may be floats, isosceles", "==", ".T.", "IsIsosceles(0.5, 0.4, 0.5)"
+do AddTestDatabase with TESTS, "No sides are equal, scalene", "==", ".T.", "IsScalene(5, 4, 6)"
+do AddTestDatabase with TESTS, "All sides are equal, scalene", "==", ".F.", "IsScalene(4, 4, 4)"
+do AddTestDatabase with TESTS, "First and second sides are equal", "==", ".F.", "IsScalene(4, 4, 3)"
+do AddTestDatabase with TESTS, "First and third sides are equal", "==", ".F.", "IsScalene(3, 4, 3)"
+do AddTestDatabase with TESTS, "Second and third sides are equal", "==", ".F.", "IsScalene(4, 3, 3)"
+do AddTestDatabase with TESTS, "May not violate triangle inequality", "==", ".F.", "IsScalene(7, 3, 2)"
+do AddTestDatabase with TESTS, "Sides may be floats, scalene", "==", ".T.", "IsScalene(0.5, 0.4, 0.6)"
+
+* Execute unit tests
+SUCCESS := RunTests(TESTS)
+
+* Return success status to OS
+ERRORLEVEL(IIF(SUCCESS, 0, 1))
+
+* Code under test (CUT)
+#include "triangle.prg"
+
+* Unit Test Framework
+#include "PRGUNIT.prg"
+
