@@ -34,10 +34,5 @@ function IsPangram(string)
 * We have a pangram
 return .T.
 
-function RemoveCharSet(charSet, string)
-   local i, clen := LEN(charSet)
-   for i := 1 to clen
-      string := STRTRAN(string, SUBSTR(charSet, i, 1))
-   next
-return string
+#include "utils.prg"
 
