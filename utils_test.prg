@@ -24,6 +24,14 @@ do AddTestDatabase with TESTS, "RemoveCharSet: multi-character charset from empt
 do AddTestDatabase with TESTS, "RemoveCharSet: multi-character charset from non-empty string 3", "==", "", "RemoveCharSet('98DCba', 'abCD89')"
 do AddTestDatabase with TESTS, "RemoveCharSet: multi-character charset from non-empty string 4", "==", "", "RemoveCharSet('Da9C8b', 'abCD89')"
 
+do AddTestDatabase with TESTS, "SToArr: empty string, empty separator", "==", "", "SToArr('', '')"
+do AddTestDatabase with TESTS, "SToArr: empty string, no separator", "==", "", "SToArr('')"
+do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, empty separator", "==", "1;2;3", "SToArr('1;2;3', '')"
+do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, no separator", "==", "1;2;3", "SToArr('1;2;3')"
+do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, same separator", "==", "1;2;3", "ArrToS(SToArr('1;2;3', ';'), ';')"
+do AddTestDatabase with TESTS, "SToArr: non-empty string no separator, with separator", "==", "123", "SToArr('123', ',')"
+do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, different separator", "==", "1;2;3", "SToArr('1;2;3', ',')"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 
