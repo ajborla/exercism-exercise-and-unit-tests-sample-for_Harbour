@@ -1,0 +1,58 @@
+* ----------------------------------------------------------------------------
+* Harbour Unit Test Runner [roman_numerals.prg]
+* Anthony J. Borla (ajborla@bigpond.com)
+* ----------------------------------------------------------------------------
+
+* Variable declarations
+memvar TESTS, SUCCESS
+
+* Test database name
+TESTS := "TESTS"
+
+* Create tests database
+do MakeTestDatabase with TESTS
+
+* Add test data into tests database
+do AddTestDatabase with TESTS, "2 is two I's", "==", "II", "Roman(2)"
+do AddTestDatabase with TESTS, "3 is three I's", "==", "III", "Roman(3)"
+do AddTestDatabase with TESTS, "4, being 5 - 1, is IV", "==", "IV", "Roman(4)"
+do AddTestDatabase with TESTS, "5 is a single V", "==", "V", "Roman(5)"
+do AddTestDatabase with TESTS, "6, being 5 + 1, is VI", "==", "VI", "Roman(6)"
+do AddTestDatabase with TESTS, "9, being 10 - 1, is IX", "==", "IX", "Roman(9)"
+do AddTestDatabase with TESTS, "20 is two X's", "==", "XXVII", "Roman(27)"
+do AddTestDatabase with TESTS, "48 is not 50 - 2 but rather 40 + 8", "==", "XLVIII", "Roman(48)"
+do AddTestDatabase with TESTS, "49 is not 40 + 5 + 4 but rather 50 - 10 + 10 - 1", "==", "XLIX", "Roman(49)"
+do AddTestDatabase with TESTS, "50 is a single L", "==", "LIX", "Roman(59)"
+do AddTestDatabase with TESTS, "90, being 100 - 10, is XC", "==", "XCIII", "Roman(93)"
+do AddTestDatabase with TESTS, "100 is a single C", "==", "CXLI", "Roman(141)"
+do AddTestDatabase with TESTS, "60, being 50 + 10, is LX", "==", "CLXIII", "Roman(163)"
+do AddTestDatabase with TESTS, "400, being 500 - 100, is CD", "==", "CDII", "Roman(402)"
+do AddTestDatabase with TESTS, "500 is a single D", "==", "DLXXV", "Roman(575)"
+do AddTestDatabase with TESTS, "900, being 1000 - 100, is CM", "==", "CMXI", "Roman(911)"
+do AddTestDatabase with TESTS, "1000 is a single M", "==", "MXXIV", "Roman(1024)"
+do AddTestDatabase with TESTS, "3000 is three M's", "==", "MMM", "Roman(3000)"
+do AddTestDatabase with TESTS, "16 is XVI", "==", "XVI", "Roman(16)"
+do AddTestDatabase with TESTS, "66 is LXVI", "==", "LXVI", "Roman(66)"
+do AddTestDatabase with TESTS, "166 is CLXVI", "==", "CLXVI", "Roman(166)"
+do AddTestDatabase with TESTS, "666 is DCLXVI", "==", "DCLXVI", "Roman(666)"
+do AddTestDatabase with TESTS, "1666 is MDCLXVI", "==", "MDCLXVI", "Roman(1666)"
+do AddTestDatabase with TESTS, "3999 is MMMCMXCIX", "==", "MMMCMXCIX", "Roman(3999)"
+do AddTestDatabase with TESTS, "4000 exceeds range", "==", "NIL", "Roman(4000)"
+do AddTestDatabase with TESTS, "0 is below range", "==", "NIL", "Roman(0)"
+do AddTestDatabase with TESTS, "No input should return an error", "==", "NIL", "Roman()"
+do AddTestDatabase with TESTS, "Too many arguments should return an error", "==", "NIL", "Roman(5, 7, 23, 153)"
+do AddTestDatabase with TESTS, "Float number input should return an error", "==", "NIL", "Roman(201.54)"
+do AddTestDatabase with TESTS, "Alpha input should return an error", "==", "NIL", "Roman('abcd')"
+
+* Execute unit tests
+SUCCESS := RunTests(TESTS)
+
+* Return success status to OS
+ERRORLEVEL(IIF(SUCCESS, 0, 1))
+
+* Code under test (CUT)
+#include "roman_numerals.prg"
+
+* Unit Test Framework
+#include "PRGUNIT.prg"
+
