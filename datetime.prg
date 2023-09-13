@@ -10,6 +10,13 @@
 #endif
 
 *
+* Given an integer year date component, returns its status as a
+*  leap year as a Boolean value.
+*
+function IsLeapYear(year) ; return ;
+   year % 400 == 0 .OR. (year % 4 == 0 .AND. year % 100 != 0)
+
+*
 * Given a date string in ISO8601 format, YYYY-MM-DDTHH:MM:SS, returns
 *  an integer representing seconds before/after the Jan 1, 1970 epoch
 *  date.
