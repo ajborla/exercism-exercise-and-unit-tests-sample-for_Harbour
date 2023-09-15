@@ -32,6 +32,19 @@ do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, same se
 do AddTestDatabase with TESTS, "SToArr: non-empty string no separator, with separator", "==", "123", "SToArr('123', ',')"
 do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, different separator", "==", "1;2;3", "SToArr('1;2;3', ',')"
 
+do AddTestDatabase with TESTS, "ArrToS: empty array, no separator", "==", "", "ArrToS({}, '')"
+do AddTestDatabase with TESTS, "ArrToS: empty array, default separator", "==", "", "ArrToS({})"
+do AddTestDatabase with TESTS, "ArrToS: empty array, single-character separator", "==", "", "ArrToS({}, ';')"
+do AddTestDatabase with TESTS, "ArrToS: numeric array, no separator", "==", "123", "ArrToS({1,2,3}, '')"
+do AddTestDatabase with TESTS, "ArrToS: numeric array, default separator", "==", "123", "ArrToS({1,2,3})"
+do AddTestDatabase with TESTS, "ArrToS: numeric array, single-character separator", "==", "1;2;3", "ArrToS({1,2,3}, ';')"
+do AddTestDatabase with TESTS, "ArrToS: character array, no separator", "==", "abc", "ArrToS({'a','b','c'}, '')"
+do AddTestDatabase with TESTS, "ArrToS: character array, default separator", "==", "abc", "ArrToS({'a','b','c'})"
+do AddTestDatabase with TESTS, "ArrToS: character array, single-character separator", "==", "a;b;c", "ArrToS({'a','b','c'}, ';')"
+do AddTestDatabase with TESTS, "ArrToS: character array, no separator 2", "==", ";;;", "ArrToS({';',';',';'}, '')"
+do AddTestDatabase with TESTS, "ArrToS: character array, default separator 2", "==", ";;;", "ArrToS({';',';',';'})"
+do AddTestDatabase with TESTS, "ArrToS: character array, single-character separator 2", "==", ";;;;;", "ArrToS({';',';',';'}, ';')"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 

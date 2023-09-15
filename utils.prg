@@ -41,3 +41,19 @@ function SToArr(string, separator)
    if !EMPTY(string) ; AADD(array, string) ; endif
 return array
 
+*
+* Given an array whose elements are non-aggregate types, returns a
+*  string of those elements separated by separator. If a string
+*  cannot be built, an empty string is returned.
+*
+function ArrToS(array, separator)
+   local i, element, string := "", arrlen := LEN(array)
+   if PCOUNT() < 2 .OR. separator == NIL ; separator := "" ; endif
+   if arrlen < 1 ; return "" ; endif
+   for i := 1 to arrlen
+      element := IIF(VALTYPE(array[i]) <> "C", ALLTRIM(STR(array[i])), array[i])
+      string += element + separator
+   next
+return ;
+   IIF(EMPTY(separator), string, SUBSTR(string, 1, RAT(separator, string) - 1))
+
