@@ -105,6 +105,10 @@ function TypeToS(value)
    local typeValue := VALTYPE(value)
 
    switch typeValue
+      * Array type (assume 1D array of non-aggregate elements),
+      *  returns the concatenation of elements as a string
+      case "A" ; return ArrToS(value)
+
       * Character type returned untouched
       case "C" ; return value
 
