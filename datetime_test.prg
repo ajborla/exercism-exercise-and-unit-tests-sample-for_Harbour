@@ -20,6 +20,14 @@ do AddTestDatabase with TESTS, "IsLeapYear: year 1900", "==", ".F.", "IsLeapYear
 do AddTestDatabase with TESTS, "IsLeapYear: year 1996", "==", ".T.", "IsLeapYear(1996)"
 do AddTestDatabase with TESTS, "IsLeapYear: year 1997", "==", ".F.", "IsLeapYear(1997)"
 
+do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: missing argument", "==", "NIL", "ISO8601ToYMDHMS()"
+do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: empty argument", "==", "NIL", "ISO8601ToYMDHMS('')"
+do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: valid argument, date only", "==", "20150124000000", "ISO8601ToYMDHMS('2015-01-24')"
+do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: valid argument, datetime, zero time", "==", "20150124000000", "ISO8601ToYMDHMS('2015-01-24T00:00:00')"
+do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: valid argument, datetime, full", "==", "20150124223427", "ISO8601ToYMDHMS('2015-01-24T22:34:27')"
+do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: invalid argument, datetime full", "==", "NIL", "ISO8601ToYMDHMS('2015-0I-24T22:34:27')"
+do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: invalid argument, datetime full", "==", "NIL", "ISO8601ToYMDHMS('2015/01/24T22:34:27')"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 
