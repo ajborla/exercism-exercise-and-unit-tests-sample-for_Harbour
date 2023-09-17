@@ -57,3 +57,19 @@ function ArrToS(array, separator)
 return ;
    IIF(EMPTY(separator), string, SUBSTR(string, 1, RAT(separator, string) - 1))
 
+*
+* Given a string, returns the Boolean status indicating whether
+*  it is convertible to an integer. Non-numeric and floating
+*  point values will both return .F.
+*
+function IsINTString(s)
+   local slen, i
+   if PCOUNT() <> 1 .OR. VALTYPE(s) <> "C" ; return .F. ; endif
+   slen := LEN(s)
+   if AT(".", s) <> 0 .OR. slen < 1 ; return .F. ; endif
+   if VAL(s) <> 0 ; return .T. ; endif
+   for i := 1 to slen
+      if !(SUBSTR(s, i, 1) $ "0123456789") ; return .F. ; endif
+   next
+return .T.
+

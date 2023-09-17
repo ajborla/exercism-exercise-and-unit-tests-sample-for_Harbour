@@ -45,6 +45,21 @@ do AddTestDatabase with TESTS, "ArrToS: character array, no separator 2", "==", 
 do AddTestDatabase with TESTS, "ArrToS: character array, default separator 2", "==", ";;;", "ArrToS({';',';',';'})"
 do AddTestDatabase with TESTS, "ArrToS: character array, single-character separator 2", "==", ";;;;;", "ArrToS({';',';',';'}, ';')"
 
+do AddTestDatabase with TESTS, "IsINTString: no argument", "==", ".F.", "IsIntString()"
+do AddTestDatabase with TESTS, "IsINTString: empty string argument", "==", ".F.", "IsIntString('')"
+do AddTestDatabase with TESTS, "IsINTString: numeric argument", "==", ".F.", "IsIntString(77)"
+do AddTestDatabase with TESTS, "IsINTString: non-digit in string 1", "==", ".F.", "IsIntString('00T')"
+do AddTestDatabase with TESTS, "IsINTString: non-digit in string 2", "==", ".F.", "IsIntString('T01')"
+do AddTestDatabase with TESTS, "IsINTString: non-digit in string 3", "==", ".F.", "IsIntString('T11')"
+do AddTestDatabase with TESTS, "IsINTString: non-digit in string 5", "==", ".F.", "IsIntString('1.T')"
+do AddTestDatabase with TESTS, "IsINTString: floating point string", "==", ".F.", "IsIntString('1.1')"
+do AddTestDatabase with TESTS, "IsINTString: single digit string", "==", ".T.", "IsIntString('1')"
+do AddTestDatabase with TESTS, "IsINTString: multi digit string", "==", ".T.", "IsIntString('12')"
+do AddTestDatabase with TESTS, "IsINTString: multi digit with zero string 1", "==", ".T.", "IsIntString('001')"
+do AddTestDatabase with TESTS, "IsINTString: multi digit with zero string 2", "==", ".T.", "IsIntString('010')"
+do AddTestDatabase with TESTS, "IsINTString: multi digit with zero string 3", "==", ".T.", "IsIntString('100')"
+do AddTestDatabase with TESTS, "IsINTString: multi digit with zero string 4", "==", ".T.", "IsIntString('000')"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 
