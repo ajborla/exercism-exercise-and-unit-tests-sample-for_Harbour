@@ -35,6 +35,10 @@ function ISO8601ToYMDHMS(datetime)
       year := SUBSTR(datetime, 1, 4)
       month := SUBSTR(datetime, 6, 2)
       day := SUBSTR(datetime, 9, 2)
+      * Ensure each component is a valid integer (no range check performed)
+      if !(IsINTString(year)) ; return NIL ; endif
+      if !(IsINTString(month)) ; return NIL ; endif
+      if !(IsINTString(day)) ; return NIL ; endif
    else
       return NIL
    endif
@@ -45,6 +49,10 @@ function ISO8601ToYMDHMS(datetime)
          hour := SUBSTR(datetime, 12, 2)
          minute := SUBSTR(datetime, 15, 2)
          second := SUBSTR(datetime, 18, 2)
+         * Ensure each component is a valid integer (no range check performed)
+         if !(IsINTString(hour)) ; return NIL ; endif
+         if !(IsINTString(minute)) ; return NIL ; endif
+         if !(IsINTString(second)) ; return NIL ; endif
       else
          return NIL
       endif
