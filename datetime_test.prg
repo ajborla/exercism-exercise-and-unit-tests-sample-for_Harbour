@@ -28,6 +28,13 @@ do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: valid argument, datetime, full"
 do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: invalid argument, datetime full", "==", "NIL", "ISO8601ToYMDHMS('2015-0I-24T22:34:27')"
 do AddTestDatabase with TESTS, "ISO8601ToYMDHMS: invalid argument, datetime full", "==", "NIL", "ISO8601ToYMDHMS('2015/01/24T22:34:27')"
 
+do AddTestDatabase with TESTS, "YMDHMSToISO8601: missing argument", "==", "NIL", "YMDHMSToISO8601()"
+do AddTestDatabase with TESTS, "YMDHMSToISO8601: empty argument", "==", "NIL", "YMDHMSToISO8601('')"
+do AddTestDatabase with TESTS, "YMDHMSToISO8601: valid argument, datetime, char array", "==", "2015-01-24T00:00:00", "YMDHMSToISO8601({'2015','01','24','00','00','00'})"
+do AddTestDatabase with TESTS, "YMDHMSToISO8601: valid argument, datetime, number array", "==", "2015-01-24T00:00:00", "YMDHMSToISO8601({2015,1,24,0,0,0})"
+do AddTestDatabase with TESTS, "YMDHMSToISO8601: valid argument, datetime, full", "==", "2015-01-24T22:34:27", "YMDHMSToISO8601({'2015','01','24','22','34','27'})"
+do AddTestDatabase with TESTS, "YMDHMSToISO8601: invalid argument, datetime full", "==", "NIL", "YMDHMSToISO8601({'2015','0I','24','22','34','27'})"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 

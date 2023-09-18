@@ -65,6 +65,41 @@ function ISO8601ToYMDHMS(datetime)
 return { year, month, day, hour, minute, second }
 
 *
+* Given an array of integer values, representing date components,
+*  in the order: year, month, day, hour, minute, second, returns
+*  a date string in ISO8601 format, YYYY-MM-DDTHH:MM:SS.
+*
+function YMDHMSToISO8601(ymdhms)
+   local year, month, day, hour, minute, second
+   local iso8601
+
+   * Ensure we have an array, and of the correct size
+   if PCOUNT() <> 1 .OR. VALTYPE(ymdhms) <> "A" ; return NIL ; endif
+   if LEN(ymdhms) <> 6 ; return NIL ; endif
+
+   * Extract date components, ensure each is a trimmed string
+   year := IIF(VALTYPE(ymdhms[1]) == "N", ALLTRIM(STR(ymdhms[1])), ALLTRIM(ymdhms[1]))
+   month := IIF(VALTYPE(ymdhms[2]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[2])),2), ALLTRIM(ymdhms[2]))
+   day := IIF(VALTYPE(ymdhms[3]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[3])),2), ALLTRIM(ymdhms[3]))
+   hour := IIF(VALTYPE(ymdhms[4]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[4])),2), ALLTRIM(ymdhms[4]))
+   minute := IIF(VALTYPE(ymdhms[5]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[5])),2), ALLTRIM(ymdhms[5]))
+   second := IIF(VALTYPE(ymdhms[6]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[6])),2), ALLTRIM(ymdhms[6]))
+
+   * Ensure each component is a valid integer (no range check performed)
+   if !(IsINTString(year)) ; return NIL ; endif
+   if !(IsINTString(month)) ; return NIL ; endif
+   if !(IsINTString(day)) ; return NIL ; endif
+   if !(IsINTString(hour)) ; return NIL ; endif
+   if !(IsINTString(minute)) ; return NIL ; endif
+   if !(IsINTString(second)) ; return NIL ; endif
+
+   * Build, and return, the date string
+   iso8601 := year + "-" + month + "-" + day + "T" + ;
+              hour + ":" + minute + ":" + second
+
+return iso8601
+
+*
 * Given a date string in ISO8601 format, YYYY-MM-DDTHH:MM:SS, returns
 *  an integer representing seconds before/after the Jan 1, 1970 epoch
 *  date.
