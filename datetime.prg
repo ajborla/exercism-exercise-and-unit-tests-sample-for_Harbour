@@ -99,6 +99,50 @@ function YMDHMSToISO8601(ymdhms)
 
 return iso8601
 
+function YMDHMSToSeconds(ymdhms)
+   local year, month, day, hour, minute, second, seconds
+   local datecmd, datestr, datefile := "YMDHMS_TO_SECONDS.TXT"
+
+   * Ensure we have an array, and of the correct size
+   if PCOUNT() <> 1 .OR. VALTYPE(ymdhms) <> "A" ; return NIL ; endif
+   if LEN(ymdhms) <> 6 ; return NIL ; endif
+
+   * Extract date components, ensure each is a trimmed string
+   year := IIF(VALTYPE(ymdhms[1]) == "N", ALLTRIM(STR(ymdhms[1])), ALLTRIM(ymdhms[1]))
+   month := IIF(VALTYPE(ymdhms[2]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[2])),2), ALLTRIM(ymdhms[2]))
+   day := IIF(VALTYPE(ymdhms[3]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[3])),2), ALLTRIM(ymdhms[3]))
+   hour := IIF(VALTYPE(ymdhms[4]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[4])),2), ALLTRIM(ymdhms[4]))
+   minute := IIF(VALTYPE(ymdhms[5]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[5])),2), ALLTRIM(ymdhms[5]))
+   second := IIF(VALTYPE(ymdhms[6]) == "N", RIGHT("0"+LTRIM(STR(ymdhms[6])),2), ALLTRIM(ymdhms[6]))
+
+   * Ensure each component is a valid integer (no range check performed)
+   if !(IsINTString(year)) ; return NIL ; endif
+   if !(IsINTString(month)) ; return NIL ; endif
+   if !(IsINTString(day)) ; return NIL ; endif
+   if !(IsINTString(hour)) ; return NIL ; endif
+   if !(IsINTString(minute)) ; return NIL ; endif
+   if !(IsINTString(second)) ; return NIL ; endif
+
+   * Assemble date string for input to utility
+   datestr := year + "-" + month + "-" + day + " " + ;
+              hour + ":" + minute + ":" + second
+
+   * Assemble `date` utility command string (*NIX-compatibility assumed)
+   datecmd := "date -u -d " ;
+              + CHR(39) + datestr + CHR(39) ;
+              + " +" + CHR(39) + "%s" + CHR(39) ;
+              + " > YMDHMS_TO_SECONDS.TXT"
+
+   * Issue OS command, redirecting output to file
+   __RUN(datecmd)
+
+   * Read file contents into array for return, then cleanup file
+   * Note LF needs to be stripped from file contents
+   seconds := STRTRAN(MEMOREAD(datefile), CHR(10))
+   ERASE &datefile
+
+return VAL(seconds)
+
 *
 * Given a date string in ISO8601 format, YYYY-MM-DDTHH:MM:SS, returns
 *  an integer representing seconds before/after the Jan 1, 1970 epoch

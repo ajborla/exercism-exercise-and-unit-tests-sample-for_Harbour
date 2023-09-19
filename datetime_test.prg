@@ -35,6 +35,13 @@ do AddTestDatabase with TESTS, "YMDHMSToISO8601: valid argument, datetime, numbe
 do AddTestDatabase with TESTS, "YMDHMSToISO8601: valid argument, datetime, full", "==", "2015-01-24T22:34:27", "YMDHMSToISO8601({'2015','01','24','22','34','27'})"
 do AddTestDatabase with TESTS, "YMDHMSToISO8601: invalid argument, datetime full", "==", "NIL", "YMDHMSToISO8601({'2015','0I','24','22','34','27'})"
 
+do AddTestDatabase with TESTS, "YMDHMSToSeconds: missing argument", "==", "NIL", "YMDHMSToSeconds()"
+do AddTestDatabase with TESTS, "YMDHMSToSeconds: empty argument", "==", "NIL", "YMDHMSToSeconds('')"
+do AddTestDatabase with TESTS, "YMDHMSToSeconds: valid argument, datetime, char array", "==", "1422057600", "YMDHMSToSeconds({'2015','01','24','00','00','00'})"
+do AddTestDatabase with TESTS, "YMDHMSToSeconds: valid argument, datetime, number array", "==", "1422057600", "YMDHMSToSeconds({2015,1,24,0,0,0})"
+do AddTestDatabase with TESTS, "YMDHMSToSeconds: valid argument, datetime, full", "==", "1422138867", "YMDHMSToSeconds({'2015','01','24','22','34','27'})"
+do AddTestDatabase with TESTS, "YMDHMSToSeconds: invalid argument, datetime full", "==", "NIL", "YMDHMSToSeconds({'2015','0I','24','22','34','27'})"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 
