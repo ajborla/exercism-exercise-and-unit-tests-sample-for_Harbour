@@ -42,6 +42,14 @@ do AddTestDatabase with TESTS, "YMDHMSToSeconds: valid argument, datetime, numbe
 do AddTestDatabase with TESTS, "YMDHMSToSeconds: valid argument, datetime, full", "==", "1422138867", "YMDHMSToSeconds({'2015','01','24','22','34','27'})"
 do AddTestDatabase with TESTS, "YMDHMSToSeconds: invalid argument, datetime full", "==", "NIL", "YMDHMSToSeconds({'2015','0I','24','22','34','27'})"
 
+do AddTestDatabase with TESTS, "SecondsToYMDHMS: missing argument", "==", "NIL", "SecondsToYMDHMS()"
+do AddTestDatabase with TESTS, "SecondsToYMDHMS: missing argument", "==", "NIL", "SecondsToYMDHMS('')"
+do AddTestDatabase with TESTS, "SecondsToYMDHMS: zero epoch seconds", "==", "19700101000000", "SecondsToYMDHMS(0)"
+do AddTestDatabase with TESTS, "SecondsToYMDHMS: positive epoch seconds 1", "==", "20150124000000", "SecondsToYMDHMS(1422057600)"
+do AddTestDatabase with TESTS, "SecondsToYMDHMS: negative epoch seconds 1", "==", "19241209000000", "SecondsToYMDHMS(-1422057600)"
+do AddTestDatabase with TESTS, "SecondsToYMDHMS: positive epoch seconds 2", "==", "20150124223427", "SecondsToYMDHMS(1422138867)"
+do AddTestDatabase with TESTS, "SecondsToYMDHMS: negative epoch seconds 2", "==", "19241208012533", "SecondsToYMDHMS(-1422138867)"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 

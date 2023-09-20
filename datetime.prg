@@ -144,6 +144,36 @@ function YMDHMSToSeconds(ymdhms)
 return VAL(seconds)
 
 *
+* Given a integer representing seconds before/after the Jan 1, 1970
+*  epoch date, returns an array of its corresponding date components
+*  in integer form, in order: year, month, day, hour, minute, second.
+*
+* Currently using OS functionality to perform task, but a native
+*  solution is planned.
+*
+function SecondsToYMDHMS(seconds)
+   local ymdHMS
+   local datecmd, datefile := "SECONDS_TO_YMDHMS.TXT"
+
+   * Ensure we have an integer value
+   if PCOUNT() <> 1 .OR. VALTYPE(seconds) <> "N" ; return NIL ; endif
+
+   * Assemble `date` utility command string (*NIX-compatibility assumed)
+   datecmd := "date -u -d @" + ALLTRIM(STR(seconds)) + " +" ;
+              + CHR(39) + "%Y;%m;%d;%H;%M;%S" + CHR(39) ;
+              + " > SECONDS_TO_YMDHMS.TXT"
+
+   * Issue OS command, redirecting output to file
+   __RUN(datecmd)
+
+   * Read file contents into array for return, then cleanup file
+   * Note LF needs to be stripped from file contents
+   ymdHMS := SToArr(STRTRAN(MEMOREAD(datefile), CHR(10)), ";")
+   ERASE &datefile
+
+return ymdHMS
+
+*
 * Given a date string in ISO8601 format, YYYY-MM-DDTHH:MM:SS, returns
 *  an integer representing seconds before/after the Jan 1, 1970 epoch
 *  date.
