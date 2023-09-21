@@ -178,16 +178,14 @@ return ymdHMS
 *  an integer representing seconds before/after the Jan 1, 1970 epoch
 *  date.
 *
-function ISO8601ToSeconds(datetime)
-   local seconds := 0
-return seconds
+function ISO8601ToSeconds(datetime) ; return ;
+   YMDHMSToSeconds(ISO8601ToYMDHMS(datetime))
 
 *
 * Given a integer representing seconds before/after the Jan 1, 1970
 *  epoch date, returns the equivalent date as a date string in ISO8061
 *  format: YYYY-MM-DDTHH:MM:SS.
 *
-function SecondsToISO8601(seconds)
-   local datetime := ""
-return datetime
+function SecondsToISO8601(seconds) ; return ;
+   YMDHMSToISO8601(SecondsToYMDHMS(seconds))
 

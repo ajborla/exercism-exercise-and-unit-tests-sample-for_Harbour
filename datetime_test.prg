@@ -50,6 +50,22 @@ do AddTestDatabase with TESTS, "SecondsToYMDHMS: negative epoch seconds 1", "=="
 do AddTestDatabase with TESTS, "SecondsToYMDHMS: positive epoch seconds 2", "==", "20150124223427", "SecondsToYMDHMS(1422138867)"
 do AddTestDatabase with TESTS, "SecondsToYMDHMS: negative epoch seconds 2", "==", "19241208012533", "SecondsToYMDHMS(-1422138867)"
 
+do AddTestDatabase with TESTS, "ISO8601ToSeconds: missing argument", "==", "NIL", "ISO8601ToSeconds()"
+do AddTestDatabase with TESTS, "ISO8601ToSeconds: empty argument", "==", "NIL", "ISO8601ToSeconds('')"
+do AddTestDatabase with TESTS, "ISO8601ToSeconds: valid argument, date only", "==", "1422057600", "ISO8601ToSeconds('2015-01-24')"
+do AddTestDatabase with TESTS, "ISO8601ToSeconds: valid argument, datetime, zero time", "==", "1422136800", "ISO8601ToSeconds('2015-01-24T22:00:00')"
+do AddTestDatabase with TESTS, "ISO8601ToSeconds: valid argument, datetime, full", "==", "1422138867", "ISO8601ToSeconds('2015-01-24T22:34:27')"
+do AddTestDatabase with TESTS, "ISO8601ToSeconds: invalid argument, datetime full", "==", "NIL", "ISO8601ToSeconds('2015-0I-24T22:34:27')"
+do AddTestDatabase with TESTS, "ISO8601ToSeconds: invalid argument, datetime full", "==", "NIL", "ISO8601ToSeconds('2015/01/24T22:34:27')"
+
+do AddTestDatabase with TESTS, "SecondsToISO8601: missing argument", "==", "NIL", "SecondsToISO8601()"
+do AddTestDatabase with TESTS, "SecondsToISO8601: missing argument", "==", "NIL", "SecondsToISO8601('')"
+do AddTestDatabase with TESTS, "SecondsToISO8601: zero epoch seconds", "==", "1970-01-01T00:00:00", "SecondsToISO8601(0)"
+do AddTestDatabase with TESTS, "SecondsToISO8601: positive epoch seconds 1", "==", "2015-01-24T00:00:00", "SecondsToISO8601(1422057600)"
+do AddTestDatabase with TESTS, "SecondsToISO8601: negative epoch seconds 1", "==", "1924-12-09T00:00:00", "SecondsToISO8601(-1422057600)"
+do AddTestDatabase with TESTS, "SecondsToISO8601: positive epoch seconds 2", "==", "2015-01-24T22:34:27", "SecondsToISO8601(1422138867)"
+do AddTestDatabase with TESTS, "SecondsToISO8601: negative epoch seconds 2", "==", "1924-12-08T01:25:33", "SecondsToISO8601(-1422138867)"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 
