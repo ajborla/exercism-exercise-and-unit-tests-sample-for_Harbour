@@ -1,5 +1,5 @@
-# exercism-exercise-and-unit-test-sample-for_Harbour
-> Sample exercises, unit tests, and test framework, for proposed Exercism track, Harbour
+# exercism-exercise-and-unit-test-samples-for_Harbour
+> Sample exercises, unit tests, and test library, for proposed Exercism track, Harbour
 
 |||
 | :---     | :--- |
