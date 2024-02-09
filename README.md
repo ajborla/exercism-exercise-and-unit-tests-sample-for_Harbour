@@ -8,7 +8,36 @@
 | license: | MIT |
 
 ## Overview
+
 ## Installation
+The unit test library, unit tests, and Exercism exercises, are all resident in the current repository, and require no installation.
+
+_Harbour_, however, **does** require installation. It is available in both binary, and source form.
+
+Here is the official download page: [Harbour Project](https://sourceforge.net/projects/harbour-project/files/)
+
+Binaries are available for several platforms, including DOS, Windows, OS/2 (an unsuccessful attempt by IBM to market a DOS-replacement), several Linux distributions, and MacOSX. Most of these date back several years, the most recent being the Ubuntu Linux version.
+
+Binary installation involves downloading the relevant package, and using the relevant package manager to effect installation.
+
+If targeting a recent Linux distribution, a source-based installation is straightforward, and, in the author's view, a preferable one.
+
+Here is an example using the official source version (later versions _are_ obtainable, refer installation instructions below). To download the source archive:
+
+```plain
+curl -sLk https://sourceforge.net/projects/harbour-project/files/source/3.0.0/harbour-3.0.0.tar.gz > harbour-3.0.0.tar.gz
+```
+
+Assuming the standard build tools (gcc, make) are installed (if not, follow instructions here: [Install Development Tools](https://ostechnix.com/install-development-tools-linux/)), then perform the following steps:
+
+```plain
+tar -xzvf harbour-3.0.0.tar.gz && cd harbour-3.0.0
+make && sudo make install
+```
+
+Several components will have installed in various subdirectories (the default parent directory location is `/usr/local`), the most important of which are the binaries, `/usr/local/bin/hbrun` and `/usr/local/bin/hbmak2`.
+
+For additional information such as how to effect an installation on Windows, please refer to the following detailed instructions: [Harbour Installation](https://www.kresin.ru/en/hrbfaq.html#Install)
 
 ## Usage
 Assuming command-line operation, and that the current directory points to a clone of this repository, the unit tests for an exercise, for example, the `leap` exercise, may be effected by invoking the `hbrun` binary, like so:
