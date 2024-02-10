@@ -8,6 +8,8 @@
 | license: | MIT |
 
 ## Overview
+
+### Language
 _Harbour_ is an open source port of, and 100% upwardly-compatible with, _Clipper_, an **xBase-family** language compiler that was popular in the mid-1980's through to mid- 1990's, for building database-driven, desktop applications on DOS-based (later Windows-based), x86 platforms.
 
 The _xBase_ language, itself, is simple, command-based, with in-built database creation and manipulation capablities, primarily intended for interactive use.
@@ -20,6 +22,20 @@ One possible starting point for doing so is: [Wikibooks Clipper Tutorial](https:
 
 Of course the prime source of information for all things _Harbour_ is: [Harbour Documentation](https://harbour.github.io/
 )
+
+### Test Library
+The author was unable to source an _official_, let alone, _any_, unit test framework, therefore proceeded to implement one.
+
+The result is, `PRGUNIT`, so-named because the extension for _xBase_  source files is `.prg`.
+
+It comprises approximately 80 lines of code, spread over several functions, all resident in the file, `PRGUNIT.prg`.
+
+It is functional, insofar as it successfully tests all twenty one of the included exercises. Planned extensions (contingent on acceptance of _Harbour_ as an Exercism track) include:
+* Support more data types
+* Emit TAP-compliant output
+* Emit Exercism spec-compliant JSON output
+
+An unusual feature is the use of a database file to store unit test parameters. See the [Usage](#Usage) section for more details.
 
 ## Installation
 The unit test library, unit tests, and Exercism exercises, are all resident in the current repository, and require no installation.
