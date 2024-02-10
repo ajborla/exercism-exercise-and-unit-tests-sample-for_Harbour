@@ -8,6 +8,18 @@
 | license: | MIT |
 
 ## Overview
+_Harbour_ is an open source port of, and 100% upwardly-compatible with, _Clipper_, an **xBase-family** language compiler that was popular in the mid-1980's through to mid- 1990's, for building database-driven, desktop applications on DOS-based (later Windows-based), x86 platforms.
+
+The _xBase_ language, itself, is simple, command-based, with in-built database creation and manipulation capablities, primarily intended for interactive use.
+
+_Clipper_ built on this, by borrowing and extending several _C_ language features, to create a more general purpose, compiled programming language for application development. _Harbour_ extends this capability to multiple platforms.
+
+Anyone familar with _C_, or a similar, procedural language, will find little difficulty learning _Harbour_.
+
+One possible starting point for doing so is: [Wikibooks Clipper Tutorial](https://en.wikibooks.org/wiki/Clipper_Tutorial:_a_Guide_to_Open_Source_Clipper(s)).
+
+Of course the prime source of information for all things _Harbour_ is: [Harbour Documentation](https://harbour.github.io/
+)
 
 ## Installation
 The unit test library, unit tests, and Exercism exercises, are all resident in the current repository, and require no installation.
