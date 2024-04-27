@@ -3,6 +3,10 @@
 * Anthony J. Borla (ajborla@bigpond.com)
 * ----------------------------------------------------------------------------
 
+#ifndef UTILS_PRG
+   #include "utils.prg"
+#endif
+
 procedure MakeTestDatabaseStructure(dbfName)
    * Creation overwites any existing database
    create &dbfName
