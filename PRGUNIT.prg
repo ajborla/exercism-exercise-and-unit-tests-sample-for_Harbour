@@ -59,6 +59,11 @@ function RunTests(dbfName, keepTestDBF, outputJSON)
 
    use &dbfName
 
+   * Determine, and print, number of tests (required for TAP)
+   if outputJSON == NIL .OR. !outputJSON
+      ? "1.." + LTRIM(STR(LASTREC()))
+   endif
+
    * Execute unit tests
    do while !EOF()
       * Extract test data (note use of 'Unwrap' to extract space-preserved
@@ -74,15 +79,14 @@ function RunTests(dbfName, keepTestDBF, outputJSON)
 
       * If the parameter flag, outputJSON, is omitted, or set to .F., then
       *  emit test report in TAP format
-
       if outputJSON == NIL .OR. !outputJSON
          * Report test outcome - TAP
          if &testExpr
-            ? "OK - " + testName
+            ? "OK " + LTRIM(STR(RECNO())) + " - " + testName
          else
             * Single test failure signals failure of whole suite
             success := .F.
-            ? "FAIL - " + testName
+            ? "FAIL " + LTRIM(STR(RECNO())) + " - " + testName
          endif
       else
          * Report test outcome - JSON
