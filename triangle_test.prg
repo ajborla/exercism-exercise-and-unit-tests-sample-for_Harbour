@@ -7,7 +7,7 @@
 memvar TESTS, SUCCESS
 
 * Test database name
-TESTS := "TESTS"
+TESTS := IIF(PCOUNT() > 0, hb_PValue(1), "TESTS")
 
 * Create tests database
 do MakeTestDatabase with TESTS
@@ -35,8 +35,11 @@ do AddTestDatabase with TESTS, "Second and third sides are equal", "==", ".F.", 
 do AddTestDatabase with TESTS, "May not violate triangle inequality", "==", ".F.", "IsScalene(7, 3, 2)"
 do AddTestDatabase with TESTS, "Sides may be floats, scalene", "==", ".T.", "IsScalene(0.5, 0.4, 0.6)"
 
-* Execute unit tests
-SUCCESS := RunTests(TESTS)
+* Execute unit tests. Arguments:
+* - Tests database name
+* - Database retention flag (.T. to not delete test database on test end)
+* - JSON output flag (.T. to emit test results in JSON format [default is TAP])
+SUCCESS := RunTests(TESTS, SToBool(hb_PValue(2)), SToBool(hb_PValue(3)))
 
 * Return success status to OS
 ERRORLEVEL(IIF(SUCCESS, 0, 1))

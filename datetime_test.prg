@@ -7,7 +7,7 @@
 memvar TESTS, SUCCESS
 
 * Test database name
-TESTS := "TESTS"
+TESTS := IIF(PCOUNT() > 0, hb_PValue(1), "TESTS")
 
 * Create tests database
 do MakeTestDatabase with TESTS
@@ -66,8 +66,11 @@ do AddTestDatabase with TESTS, "SecondsToISO8601: negative epoch seconds 1", "==
 do AddTestDatabase with TESTS, "SecondsToISO8601: positive epoch seconds 2", "==", "2015-01-24T22:34:27", "SecondsToISO8601(1422138867)"
 do AddTestDatabase with TESTS, "SecondsToISO8601: negative epoch seconds 2", "==", "1924-12-08T01:25:33", "SecondsToISO8601(-1422138867)"
 
-* Execute unit tests
-SUCCESS := RunTests(TESTS)
+* Execute unit tests. Arguments:
+* - Tests database name
+* - Database retention flag (.T. to not delete test database on test end)
+* - JSON output flag (.T. to emit test results in JSON format [default is TAP])
+SUCCESS := RunTests(TESTS, SToBool(hb_PValue(2)), SToBool(hb_PValue(3)))
 
 * Return success status to OS
 ERRORLEVEL(IIF(SUCCESS, 0, 1))

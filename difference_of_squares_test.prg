@@ -7,7 +7,7 @@
 memvar TESTS, SUCCESS
 
 * Test database name
-TESTS := "TESTS"
+TESTS := IIF(PCOUNT() > 0, hb_PValue(1), "TESTS")
 
 * Create tests database
 do MakeTestDatabase with TESTS
@@ -41,8 +41,11 @@ do AddTestDatabase with TESTS, "Alpha input should return an error", "==", "NIL"
 do AddTestDatabase with TESTS, "Zero is an error", "==", "NIL", "Difference(0)"
 do AddTestDatabase with TESTS, "Negative value is an error", "==", "NIL", "Difference(-1)"
 
-* Execute unit tests
-SUCCESS := RunTests(TESTS)
+* Execute unit tests. Arguments:
+* - Tests database name
+* - Database retention flag (.T. to not delete test database on test end)
+* - JSON output flag (.T. to emit test results in JSON format [default is TAP])
+SUCCESS := RunTests(TESTS, SToBool(hb_PValue(2)), SToBool(hb_PValue(3)))
 
 * Return success status to OS
 ERRORLEVEL(IIF(SUCCESS, 0, 1))
