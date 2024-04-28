@@ -99,6 +99,12 @@ function YMDHMSToISO8601(ymdhms)
 
 return iso8601
 
+*
+* Given an array of integer values, representing date components,
+*  in the order: year, month, day, hour, minute, second, returns
+*  an integer representing seconds before/after the Jan 1, 1970 epoch
+*  date.
+*
 function YMDHMSToSeconds(ymdhms)
    local year, month, day, hour, minute, second, seconds
    local datecmd, datestr, datefile := "YMDHMS_TO_SECONDS.TXT"
