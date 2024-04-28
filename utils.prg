@@ -73,3 +73,14 @@ function IsINTString(s)
    next
 return .T.
 
+*
+* Given a string, returns the Boolean value represented.
+*
+function SToBool(s)
+return ;
+   IIF(VALTYPE(s) <> "C", NIL, ;
+      IIF(UPPER(s) == ".T.", .T., ;
+         IIF(UPPER(s) == ".F.", .F., ;
+            IIF(SUBSTR(s, 1, 1) $ 'Tt', .T., ;
+               IIF(SUBSTR(s, 1, 1) $ 'Ff', .F., NIL)))))
+

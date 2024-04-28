@@ -60,6 +60,17 @@ do AddTestDatabase with TESTS, "IsINTString: multi digit with zero string 2", "=
 do AddTestDatabase with TESTS, "IsINTString: multi digit with zero string 3", "==", ".T.", "IsIntString('100')"
 do AddTestDatabase with TESTS, "IsINTString: multi digit with zero string 4", "==", ".T.", "IsIntString('000')"
 
+do AddTestDatabase with TESTS, "SToBool: no argument", "==", "NIL", "SToBool()"
+do AddTestDatabase with TESTS, "SToBool: empty string argument", "==", "NIL", "SToBool('')"
+do AddTestDatabase with TESTS, "SToBool: .T. argument", "==", ".T.", "SToBool('.T.')"
+do AddTestDatabase with TESTS, "SToBool: .t. argument", "==", ".T.", "SToBool('.t.')"
+do AddTestDatabase with TESTS, "SToBool: .F. argument", "==", ".F.", "SToBool('.F.')"
+do AddTestDatabase with TESTS, "SToBool: .f. argument", "==", ".F.", "SToBool('.f.')"
+do AddTestDatabase with TESTS, "SToBool: TRUE argument", "==", ".T.", "SToBool('TRUE')"
+do AddTestDatabase with TESTS, "SToBool: true argument", "==", ".T.", "SToBool('true')"
+do AddTestDatabase with TESTS, "SToBool: FALSE argument", "==", ".F.", "SToBool('FALSE')"
+do AddTestDatabase with TESTS, "SToBool: false argument", "==", ".F.", "SToBool('false')"
+
 * Execute unit tests
 SUCCESS := RunTests(TESTS)
 
