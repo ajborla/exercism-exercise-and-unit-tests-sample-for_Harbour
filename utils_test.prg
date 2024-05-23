@@ -30,6 +30,8 @@ do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, empty s
 do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, no separator", "==", "1;2;3", "SToArr('1;2;3')"
 do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, same separator", "==", "1;2;3", "ArrToS(SToArr('1;2;3', ';'), ';')"
 do AddTestDatabase with TESTS, "SToArr: non-empty string no separator, with separator", "==", "123", "SToArr('123', ',')"
+do AddTestDatabase with TESTS, "SToArr: non-empty string no separator, no separator", "==", "123", "SToArr('123')"
+do AddTestDatabase with TESTS, "SToArr: non-empty string no separator, with separator", "==", "123", "SToArr('123', '')"
 do AddTestDatabase with TESTS, "SToArr: non-empty string with separator, different separator", "==", "1;2;3", "SToArr('1;2;3', ',')"
 
 do AddTestDatabase with TESTS, "ArrToS: empty array, no separator", "==", "", "ArrToS({}, '')"
